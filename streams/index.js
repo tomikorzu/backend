@@ -32,7 +32,7 @@ function copyFile(fileToCopy, newFile) {
 
   writeStream.on("finish", () => {
     console.log("file copied successfully");
-    readWithError();
+    writeWithError();
   });
 }
 
@@ -46,7 +46,7 @@ function writeWithError() {
   });
 
   errorSteam.end(() => {
-    writeWithError();
+    readWithError();
   });
 }
 
@@ -58,7 +58,7 @@ function readWithError() {
   });
   readStream.on("error", (err) => {
     console.log("error reading the file", err);
-    writeStream.write("There was an error");
+    writeStream.write("There was an error reading the file\n");
     writeStream.end();
   });
 
