@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./fs/index.js",
+    "start": "node ./streams/index.js",
     "http": "node ./http/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
