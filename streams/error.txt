@@ -1,0 +1,2 @@
+This is an error message in the writing process
+There was an error reading the file

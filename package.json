@@ -5,11 +5,17 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./streams/index.js",
-    "http": "node ./http/index.js",
+    "start": "nodemon ./express/index.js",
+    "form": "nodemon ./form/index.js",
+    "streams": "nodemon ./streams/index.js",
+    "http": "nodemon ./http/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
 }
