@@ -19,14 +19,15 @@ const userPage = (res) => {
   });
 };
 
-app.post("/user", (req, res) => receiveUsersData(req, res));
+const users = {
+  id: 4,
+  user: "tomas",
+  password: "1234",
+};
 
-const receiveUsersData = (req, res) => {
-  const users = {
-    id: 4,
-    user: "tomas",
-    password: "1234",
-  };
+app.post("/user", (req, res) => receiveUsersData(res, users));
+
+const receiveUsersData = (res, users) => {
   const { id, user, password } = users;
   const newUser = `${id}|${user}|${password}`;
 
