@@ -76,12 +76,46 @@ const uploadExistingUser = (res, users) => {
   });
 };
 
+const deleteUser = {
+  id: 8,
+};
+
+app.delete("/user", (req, res) => deleteUserById(res, deleteUser));
+
+const deleteUserById = (res, users) => {
+  const { id } = users;
+
+  fs.readFile("server-exercises/api-express/users.txt", "utf8", (err, data) => {
+    errorTest(err, "user", res);
+
+    const users = data.split("\n");
+    const filteredUsers = users.filter((user) => !user.startsWith(id + "|"));
+
+    if (filteredUsers.length === users.length) {
+      return res.send("User not found");
+    }
+
+    const result = filteredUsers.join("\n");
+
+    fs.writeFile("server-exercises/api-express/users.txt", result, (err) => {
+      errorTest(err, "user", res);
+      res.send("User deleted");
+    });
+  });
+};
+
 const errorTest = (err, page, res) => {
   if (err) {
     console.error(`There was an error in ${page} page: ${err}`);
     res.send(`<h2>Ooops... There was an error:</h2><h4>${err}</h4>`);
   }
 };
+
+app.get("*", (req, res) => {
+  res.send(
+    `<h1>Ooops... Looks like you couldnt find the page that you were looking for.</h1><a href="/">Home</a>`
+  );
+});
 
 app.listen(port, () => {
   console.log(`Backend running in http://localhost:${port}`);
