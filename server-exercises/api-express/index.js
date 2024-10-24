@@ -19,6 +19,27 @@ const userPage = (res) => {
   });
 };
 
+app.post("/user", (req, res) => receiveUsersData(req, res));
+
+const receiveUsersData = (req, res) => {
+  const users = {
+    id: 4,
+    user: "tomas",
+    password: "1234",
+  };
+  const { id, user, password } = users;
+  const newUser = `${id}|${user}|${password}`;
+
+  fs.appendFile(
+    "server-exercises/api-express/users.txt",
+    `${newUser}\n`,
+    (err) => {
+      errorTest(err, "user", res);
+      res.send("User added");
+    }
+  );
+};
+
 const errorTest = (err, page, res) => {
   if (err) {
     console.error(`There was an error in ${page} page: ${err}`);

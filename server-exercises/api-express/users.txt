@@ -1,3 +1,4 @@
 1|Ezequiel|mySuperSecretPassword
 2|Luiggi|LuiggisSuperSecretPassword
-3|BlaBla|password
+3|BlaBla|password4|tomas|1234
+4|tomas|1234
