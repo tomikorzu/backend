@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./server-exercises/server-http/index.js",
-    "dev": "nodemon ./server-exercises/api-express/index.js",
+    "server-http": "nodemon ./server-exercises/server-http/index.js",
+    "start": "nodemon ./server-exercises/api-express/index.js",
     "express": "nodemon ./express/index.js",
     "form": "nodemon ./form/index.js",
     "streams": "nodemon ./streams/index.js",
