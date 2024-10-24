@@ -6,6 +6,8 @@ import fs from "fs";
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send(`<h1>Home</h1><a href="/user">Users data</a>`);
 });
@@ -19,16 +21,10 @@ const userPage = (res) => {
   });
 };
 
-const postUser = {
-  id: 4,
-  user: "tomas",
-  password: "1234",
-};
+app.post("/user", (req, res) => receiveUsersData(req, res));
 
-app.post("/user", (req, res) => receiveUsersData(res, postUser));
-
-const receiveUsersData = (res, users) => {
-  const { id, user, password } = users;
+const receiveUsersData = (req, res) => {
+  const { id, user, password } = req.body;
   const newUser = `${id}|${user}|${password}`;
 
   fs.appendFile(
@@ -41,16 +37,10 @@ const receiveUsersData = (res, users) => {
   );
 };
 
-const putUser = {
-  id: 12,
-  user: "tobias",
-  password: "432423",
-};
+app.put("/user", (req, res) => uploadExistingUser(req, res));
 
-app.put("/user", (req, res) => uploadExistingUser(res, putUser));
-
-const uploadExistingUser = (res, users) => {
-  const { id, user, password } = users;
+const uploadExistingUser = (req, res) => {
+  const { id, user, password } = req.body;
 
   fs.readFile("server-exercises/api-express/users.txt", "utf8", (err, data) => {
     errorTest(err, "user", res);
@@ -76,14 +66,10 @@ const uploadExistingUser = (res, users) => {
   });
 };
 
-const deleteUser = {
-  id: 8,
-};
+app.delete("/user", (req, res) => deleteUserById(req, res));
 
-app.delete("/user", (req, res) => deleteUserById(res, deleteUser));
-
-const deleteUserById = (res, users) => {
-  const { id } = users;
+const deleteUserById = (req, res) => {
+  const { id } = req.body;
 
   fs.readFile("server-exercises/api-express/users.txt", "utf8", (err, data) => {
     errorTest(err, "user", res);
