@@ -1,27 +1,45 @@
 console.log("Server HTTP exercise");
 
-import express from "express";
+import http from "http";
+const port = 3000;
 
-const app = express();
-const port = 3000
+const server = http.createServer((req, res) => setServerPages(req, res));
 
-app.get("/", (req, res) => {
-  res.send("Hello world!!!");
-});
+const setServerPages = (req, res) => {
+  res.setHeader("Content-type", "text/html");
+
+  if (req.method === "GET" && req.url === "/") {
+    homePage(res);
+  } else if (req.method === "GET" && req.url === "/about") {
+    aboutPage(res);
+  } else {
+    errorPage(res);
+  }
+};
+
+const homePage = (res) => {
+  res.statusCode = 200;
+  res.setHeader("Content-type", "text/html");
+  res.end(`<h1>Hello World!!!</h1><a href="/about">About Me</a>`);
+};
 
 const myDescription =
   "I am Tomas Korzusehec, and develop websites with react, vanilla, socket, express and more programming languages";
 
-app.get("/about", (req, res) => {
-  res.send(myDescription);
-});
+const aboutPage = (res) => {
+  res.statusCode = 200;
+  res.setHeader("Content-type", "text/html");
+  res.end(`<h1>About Me</h1><h3>${myDescription}</h3>`);
+};
 
-app.get("/error", (req, res) => {
-  res.send(
-    `<h2>Ops, looks like you are not in an existing page!!!, get back to home</h2><br><a href="/">Home</a>`
+const errorPage = (res) => {
+  res.statusCode = 404;
+  res.setHeader("Content-type", "text/html");
+  res.end(
+    `<h1>Ooops... Looks like you couldnt find the page that you were looking for.</h1><a href="/">Home</a>`
   );
-});
+};
 
-app.listen(port, (req, res) => {
-    console.log(`Backend running on http//localhost:${port}`)
-})
+server.listen(port, () => {
+  console.log(`Backend running in http://localhost://${port}`);
+});
